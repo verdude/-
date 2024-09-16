@@ -1,0 +1,6 @@
+*.pcap
+*.pcapng
+zig-out
+.zig-cache
+tags
+vgcore.*
