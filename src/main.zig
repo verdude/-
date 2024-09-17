@@ -8,12 +8,10 @@ fn base32Decode(input: []const u8) ![]u8 {
     var bits_left: u5 = 0;
 
     for (input) |c| {
-        std.debug.print("c: 0x{x}, 【{c}】\n", .{ c, c });
         const value: u8 = switch (c) {
             'A'...'Z' => c - 'A',
             '2'...'7' => c - '2' + 26,
             else => {
-                std.log.err("Invalid character: 0x{x}, 【{c}】\n", .{ c, c });
                 return error.InvalidCharacter;
             },
         };
