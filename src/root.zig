@@ -7,7 +7,9 @@ export fn get_totp(secret: [*]const u8, secret_len: usize) ?[*]const u8 {
         secret[0..secret_len],
         &decoded_secret,
     ) catch secret[0..secret_len];
-    const nali = std.heap.c_allocator.alloc(u8, 6) catch unreachable;
+    const nali = std.heap.c_allocator.alloc(u8, 6) catch {
+        return null;
+    };
     const zheli = totp.generateTotp(
         secret_slice,
         30,
