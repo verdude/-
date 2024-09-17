@@ -16,5 +16,6 @@ pub fn main() !void {
     var totp_code: [6]u8 = undefined;
 
     const shijianmima = try totp.generateTotp(decoded_secret, 30, 6, &totp_code);
-    std.debug.print("時間密碼: {s}\n", .{shijianmima});
+    try std.io.getStdOut().writer().print("{s}", .{shijianmima});
+    std.debug.print("\n", .{});
 }
