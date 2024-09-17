@@ -13,7 +13,7 @@ fn base32Decode(input: []const u8) ![]u8 {
             'A'...'Z' => c - 'A',
             '2'...'7' => c - '2' + 26,
             else => {
-                std.debug.print("Invalid character: 0x{x}, 【{c}】\n", .{ c, c });
+                std.log.err("Invalid character: 0x{x}, 【{c}】\n", .{ c, c });
                 return error.InvalidCharacter;
             },
         };
@@ -23,7 +23,6 @@ fn base32Decode(input: []const u8) ![]u8 {
 
         while (bits_left >= 8) {
             bits_left -= 8;
-            std.debug.print("buffer: 0x{x}, bits_left: {d}\n", .{ buffer, bits_left });
             output[output_index] = @intCast((buffer >> bits_left) & 0xFF);
             output_index += 1;
         }
@@ -63,7 +62,6 @@ pub fn main() !void {
     var buffer: [256]u8 = undefined;
     const secret = try readStringFromStdin(&buffer);
     const decoded_secret = try base32Decode(secret);
-    std.log.debug("Decoded secret: {x}\n", .{decoded_secret});
     var totp_code: [6]u8 = undefined;
 
     const shijianmima = try generateTotp(decoded_secret, 30, 6, &totp_code);
